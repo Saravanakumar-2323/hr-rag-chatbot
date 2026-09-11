@@ -142,7 +142,6 @@ collection = create_vector_store()
 # --------------------------------------------------
 # Generate Answer
 # --------------------------------------------------
-
 def generate_answer(prompt):
 
     inputs = tokenizer(
@@ -154,16 +153,16 @@ def generate_answer(prompt):
 
     outputs = llm_model.generate(
         **inputs,
-        max_new_tokens=100,
-        do_sample=False
+        max_new_tokens=60,
+        num_beams=4,
+        do_sample=False,
+        early_stopping=True
     )
 
     return tokenizer.decode(
         outputs[0],
         skip_special_tokens=True
-    )
-
-
+    ).strip()
 # --------------------------------------------------
 # RAG Function
 # --------------------------------------------------
@@ -195,26 +194,18 @@ def ask_rag(question):
 
     context = "\n\n".join(retrieved_chunks)
 
-    prompt = f"""
-You are an HR policy assistant.
-
-Answer the user's question ONLY using the provided context.
-
-STRICT RULES:
-
-1. Do not guess.
-2. Do not invent information.
-3. Do not use outside knowledge.
-4. If the answer is not clearly present in the context, say:
-"The information is not available in the provided HR policy."
-5. For numerical questions, copy the exact number from the context.
-6. Do not use numbers from other policy sections.
+ prompt = f"""
+Answer the question using only the information in the context.
 
 Context:
 {context}
 
 Question:
 {question}
+
+Give a short complete answer.
+Do not guess.
+Do not add information that is not in the context.
 
 Answer:
 """
