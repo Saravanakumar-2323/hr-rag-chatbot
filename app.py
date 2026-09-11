@@ -194,7 +194,7 @@ def ask_rag(question):
 
     context = "\n\n".join(retrieved_chunks)
 
- prompt = f"""
+    prompt = f"""
 Answer the question using only the information in the context.
 
 Context:
@@ -209,6 +209,10 @@ Do not add information that is not in the context.
 
 Answer:
 """
+
+    answer = generate_answer(prompt)
+
+    return answer, retrieved_chunks
 
     answer = generate_answer(prompt)
 
