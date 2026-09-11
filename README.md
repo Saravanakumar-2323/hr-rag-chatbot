@@ -6,7 +6,7 @@ The chatbot retrieves relevant information from the HR Policy PDF and generates 
 
 ## 🚀 Live Demo
 
-[Try the HR Policy Assistant](YOUR_STREAMLIT_URL)
+[Try the HR Policy Assistant](https://hr-rag-chatbot-8kwh6lwntkrxhzkrhas5hx.streamlit.app/)
 
 ## 🧠 Features
 
